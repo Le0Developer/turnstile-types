@@ -28,4 +28,6 @@ export interface TurnstileOptions {
     "response-field"?: boolean; // defaults to true
     "response-field-name"?: string; // defaults to cf-turnstile-response
     size?: "normal" | "invisible" | "compact";
+    retry?: "auto" | "never";
+    retryInterval?: number; // up to 15m (900_000) in ms, default is 8s
 }
