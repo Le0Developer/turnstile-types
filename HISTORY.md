@@ -7,9 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.0.0] - 2022-09-29
+## [1.0.1] - 2022-11-25
+
+### Fixed
+
+- Fix name of `retry-interval`
+
+## [1.0.0] - 2022-11-25
 
 Initial release.
 
-[unreleased]: https://github.com/Le0Developer/turnstile-types/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/Le0Developer/turnstile-types/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/Le0Developer/turnstile-types/releases/tag/v1.0.1
 [1.0.0]: https://github.com/Le0Developer/turnstile-types/releases/tag/v1.0.0
