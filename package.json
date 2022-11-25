@@ -1,0 +1,14 @@
+{
+    "name": "turnstile-types",
+    "version": "1.0.5",
+    "description": "TypeScript typings for Cloudflare Turnstile",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/le0developer/turnstile-types"
+    },
+    "types": "./index.d.ts",
+    "files": [
+      "index.d.ts"
+    ],
+    "author": "Cloudflare Workers Team <workers@cloudflare.com> (https://workers.cloudflare.com)"
+  }
