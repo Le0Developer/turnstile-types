@@ -25,7 +25,7 @@ export interface TurnstileOptions {
     cData?: string;
     callback?: (token: string) => void;
     "error-callback"?: () => void;
-    "expired-callback"?: () => void;
+    "expired-callback"?: (token: string) => void;
     "timeout-callback"?: () => void;
     theme?: "light" | "dark" | "auto"; // defaults to "auto"
     tabindex?: number; // defaults to 0
