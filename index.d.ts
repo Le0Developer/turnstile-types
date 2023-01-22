@@ -1,18 +1,22 @@
 
+type ElementId = string;
+type WidgetId = string;
+type Container = ElementId | HTMLElement;
+
 declare global {
     interface Window {
-        turnstile: {
-            render: (
-                idOrContainer: string | HTMLElement,
-                options: TurnstileOptions
-            ) => string;
-            reset: (widgetIdOrContainer?: string | HTMLElement) => void;
-            getResponse: (
-                widgetIdOrContainer?: string | HTMLElement
-            ) => string | undefined;
-            remove: (widgetIdOrContainer?: string | HTMLElement) => void;
-        };
+        turnstile: TurnstileObject;
     }
+}
+
+export interface TurnstileObject {
+    render: (
+        container: Container,
+        options: TurnstileOptions
+    ) => WidgetId;
+    reset: (widget?: Container | WidgetId) => void;
+    getResponse: (widget?: Container | WidgetId) => string | undefined;
+    remove: (widget?: Container | WidgetId) => void;
 }
 
 export interface TurnstileOptions {
@@ -23,12 +27,12 @@ export interface TurnstileOptions {
     "error-callback"?: () => void;
     "expired-callback"?: () => void;
     "timeout-callback"?: () => void;
-    theme?: "light" | "dark" | "auto"; // defaults to auto
-    tabindex?: number;
+    theme?: "light" | "dark" | "auto"; // defaults to "auto"
+    tabindex?: number; // defaults to 0
     "response-field"?: boolean; // defaults to true
-    "response-field-name"?: string; // defaults to cf-turnstile-response
-    size?: "normal" | "invisible" | "compact";
-    retry?: "auto" | "never";
+    "response-field-name"?: string; // defaults to cf-"turnstile-response"
+    size?: "normal" | "invisible" | "compact"; // defaults to "normal"
+    retry?: "auto" | "never"; // defaults to "auto"
     "retry-interval"?: number; // up to 15m (900_000) in ms, defaults to 8s
-    "refresh-expired"?: "auto" | "manual" | "never";
+    "refresh-expired"?: "auto" | "manual" | "never"; // defaults to "auto"
 }
