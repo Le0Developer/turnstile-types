@@ -38,4 +38,4 @@ export interface TurnstileOptions {
     "refresh-expired"?: "auto" | "manual" | "never"; // defaults to "auto"
 }
 
-type SupportedLanguages = "ar-eg" | "de" | "en" | "es" | "fa" | "fr" | "id" | "it" | "ja" | "ko" | "nl" | "pl" | "pt-br" | "ru" | "tr" | "zh-cn" | "zh-tw";
+export type SupportedLanguages = "ar-eg" | "de" | "en" | "es" | "fa" | "fr" | "id" | "it" | "ja" | "ko" | "nl" | "pl" | "pt-br" | "ru" | "tr" | "zh-cn" | "zh-tw";
