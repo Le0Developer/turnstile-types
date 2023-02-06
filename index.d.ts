@@ -1,7 +1,7 @@
 
-type ElementId = string;
-type WidgetId = string;
-type Container = ElementId | HTMLElement;
+export type ElementId = string;
+export type WidgetId = string;
+export type Container = ElementId | HTMLElement;
 
 declare global {
     interface Window {
