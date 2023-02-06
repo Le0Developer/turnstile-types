@@ -28,6 +28,7 @@ export interface TurnstileOptions {
     "expired-callback"?: (token: string) => void;
     "timeout-callback"?: () => void;
     theme?: "light" | "dark" | "auto"; // defaults to "auto"
+    language?: SupportedLanguages | "auto"; // defaults to "auto"
     tabindex?: number; // defaults to 0
     "response-field"?: boolean; // defaults to true
     "response-field-name"?: string; // defaults to cf-"turnstile-response"
@@ -36,3 +37,5 @@ export interface TurnstileOptions {
     "retry-interval"?: number; // up to 15m (900_000) in ms, defaults to 8s
     "refresh-expired"?: "auto" | "manual" | "never"; // defaults to "auto"
 }
+
+type SupportedLanguages = "ar-eg" | "de" | "en" | "es" | "fa" | "fr" | "id" | "it" | "ja" | "ko" | "nl" | "pl" | "pt-br" | "ru" | "tr" | "zh-cn" | "zh-tw";

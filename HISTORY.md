@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `refresh-expired`
+- `language`
 - `TurnstileObject` which is equal to `window.turnstile`
 - Defaults of each option in comments
 
