@@ -31,7 +31,7 @@ export interface TurnstileOptions {
     language?: SupportedLanguages | "auto"; // defaults to "auto"
     tabindex?: number; // defaults to 0
     "response-field"?: boolean; // defaults to true
-    "response-field-name"?: string; // defaults to cf-"turnstile-response"
+    "response-field-name"?: string; // defaults to "cf-turnstile-response"
     size?: "normal" | "invisible" | "compact"; // defaults to "normal"
     retry?: "auto" | "never"; // defaults to "auto"
     "retry-interval"?: number; // up to 15m (900_000) in ms, defaults to 8s
