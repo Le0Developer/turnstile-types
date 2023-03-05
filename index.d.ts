@@ -36,6 +36,8 @@ export interface TurnstileOptions {
     retry?: "auto" | "never"; // defaults to "auto"
     "retry-interval"?: number; // up to 15m (900_000) in ms, defaults to 8s
     "refresh-expired"?: "auto" | "manual" | "never"; // defaults to "auto"
+    appearance?: "always" | "execute" | "interaction-only";
+    execution?: "render" |  "execute";
 }
 
 export type SupportedLanguages = "ar-eg" | "de" | "en" | "es" | "fa" | "fr" | "id" | "it" | "ja" | "ko" | "nl" | "pl" | "pt-br" | "ru" | "tr" | "zh-cn" | "zh-tw";
