@@ -10,13 +10,16 @@ declare global {
 }
 
 export interface TurnstileObject {
+    ready: (() => void);
+    implicitRender: () => void;
+    execute: (container?: Container, options?: TurnstileOptions) => void;
     render: (
         container: Container,
         options: TurnstileOptions
     ) => WidgetId;
     reset: (widget?: Container | WidgetId) => void;
-    getResponse: (widget?: Container | WidgetId) => string | undefined;
     remove: (widget?: Container | WidgetId) => void;
+    getResponse: (widget?: Container | WidgetId) => string | undefined;
 }
 
 export interface TurnstileOptions {

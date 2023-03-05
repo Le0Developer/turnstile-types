@@ -9,8 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `appearance`
-- `execution`
+- Option: `appearance`
+- Option: `execution`
+- Function: `ready`
+- Function: `implicitRender`
+- Function: `execute`
 
 ## [1.1.1] - 2023-02-06
 
