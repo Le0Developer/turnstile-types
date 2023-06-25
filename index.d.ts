@@ -30,6 +30,9 @@ export interface TurnstileOptions {
     "error-callback"?: () => void;
     "expired-callback"?: (token: string) => void;
     "timeout-callback"?: () => void;
+    "before-interactive-callback"?: () => void;
+    "after-interactive-callback"?: () => void;
+    "unsupported-callback"?: () => void;
     theme?: "light" | "dark" | "auto"; // defaults to "auto"
     language?: SupportedLanguages | "auto"; // defaults to "auto"
     tabindex?: number; // defaults to 0
