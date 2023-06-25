@@ -41,6 +41,8 @@ export interface TurnstileOptions {
     "refresh-expired"?: "auto" | "manual" | "never"; // defaults to "auto"
     appearance?: "always" | "execute" | "interaction-only";
     execution?: "render" |  "execute";
+
+    chlPageData?: string; // ENTERPRISE ONLY - undocumented
 }
 
 export type SupportedLanguages = "ar-eg" | "de" | "en" | "es" | "fa" | "fr" | "id" | "it" | "ja" | "ko" | "nl" | "pl" | "pt-br" | "ru" | "tr" | "zh-cn" | "zh-tw";
