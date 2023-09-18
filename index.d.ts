@@ -48,4 +48,4 @@ export interface TurnstileOptions {
     chlPageData?: string; // ENTERPRISE ONLY - undocumented
 }
 
-export type SupportedLanguages = "ar-eg" | "de" | "en" | "es" | "fa" | "fr" | "id" | "it" | "ja" | "ko" | "nl" | "pl" | "pt-br" | "ru" | "tr" | "zh-cn" | "zh-tw";
+export type SupportedLanguages = "ar-eg" | "de" | "en" | "es" | "fa" | "fr" | "id" | "it" | "ja" | "ko" | "nl" | "pl" | "pt-br" | "ru" | "tr" | "zh-cn" | "zh-tw" | "uk";
