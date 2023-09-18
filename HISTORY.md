@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `chlPageData` option (undocumented - enterprise only)
 - `(after|before)-interactive-callback` and `unsupported-callback`
+- `turnstile.isExpired`
 - Ukranian language (`uk`)
 
 ## [1.1.2] - 2023-03-09

@@ -20,6 +20,7 @@ export interface TurnstileObject {
     reset: (widget?: Container | WidgetId) => void;
     remove: (widget?: Container | WidgetId) => void;
     getResponse: (widget?: Container | WidgetId) => string | undefined;
+		isExpired: (widget?: Container | WidgetId) => boolean;
 }
 
 export interface TurnstileOptions {
