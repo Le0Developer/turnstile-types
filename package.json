@@ -1,15 +1,15 @@
 {
-    "name": "turnstile-types",
-    "version": "1.1.2",
-    "description": "TypeScript typings for Cloudflare Turnstile",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/le0developer/turnstile-types"
-    },
-    "types": "./index.d.ts",
-    "files": [
-      "index.d.ts"
-    ],
-    "author": "Leo Developer",
-    "license": "MIT"
-  }
+	"name": "turnstile-types",
+	"version": "1.1.2",
+	"description": "TypeScript typings for Cloudflare Turnstile",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/le0developer/turnstile-types"
+	},
+	"types": "./index.d.ts",
+	"files": [
+		"index.d.ts"
+	],
+	"author": "Leo Developer",
+	"license": "MIT"
+}
