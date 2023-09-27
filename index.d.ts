@@ -9,7 +9,7 @@ declare global {
 }
 
 export interface TurnstileObject {
-	ready: () => void;
+	ready: (cb: () => any) => void;
 	implicitRender: () => void;
 	execute: (container?: Container, options?: TurnstileOptions) => void;
 	render: (container: Container, options: TurnstileOptions) => WidgetId;
