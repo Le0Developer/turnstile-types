@@ -2,7 +2,7 @@
  * Represents a rendered Turnstile widget.  Used to identify a specific widget when calling
  * Turnstile methods.
  */
-export type WidgetId = string;
+export type WidgetId = string
 
 /**
  * Turnstile is Cloudflare’s smart CAPTCHA alternative. It can be embedded into any website
@@ -11,40 +11,59 @@ export type WidgetId = string;
  */
 export interface TurnstileObject {
 	/**
+	 * If using synchronous loading, will be called once the DOM is ready.
+	 * @see [Explicit Rendering](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget)
+	 */
+	ready: () => void
+
+	/**
+	 * @see [Implicit Rendering](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#implicitly-render-the-turnstile-widget)
+	 */
+	implicitRender: () => void
+
+	/**
+	 * Excecutes the challenge after the render() function has been called, by invoking the
+	 * turnstile.execute(container: string | HTMLElement, jsParams?: RenderParameters) function
+	 * separately, decoupling the appearance and rendering of a widget from its execution.
+	 * @see [Execution Modes](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#execution-modes)
+	 */
+	execute: () => void
+
+	/**
 	 * Explicitly renders the Turnstile widget.  The `sitekey` parameter is required. The
 	 * `callback` parameter, however, is only required if `execution` is set to `execute`.
 	 * @param container - HTML container to render the widget.
 	 * @param options - Configuration options for rendering. See {@link RenderOptions}.
 	 * @returns A `widgetId` string if successful, otherwise undefined.
 	 */
-	render(container: HTMLElement | string, options: RenderOptions): string | undefined;
-
-	/**
-	 * Obtains the widget's response using its widgetId.
-	 * @param widgetId - The ID of the widget.
-	 */
-	getResponse(widgetId: WidgetId): string;
-
-	/**
-	 * Checks if the widget has expired.
-	 * @param widgetId - The ID of the widget.
-	 */
-	isExpired(widgetId: WidgetId): boolean;
+	render(container: HTMLElement | string, options: RenderOptions): string | undefined
 
 	/**
 	 * Resets the widget.
 	 * @param widgetId - The ID of the widget.
 	 */
-	reset(widgetId: WidgetId): void;
+	reset(widgetId: WidgetId): void
 
 	/**
 	 * Removes the widget from the page.
 	 * @param widgetId - The ID of the widget.
 	 */
-	remove(widgetId: WidgetId): void;
+	remove(widgetId: WidgetId): void
+
+	/**
+	 * Obtains the widget's response using its widgetId.
+	 * @param widgetId - The ID of the widget.
+	 */
+	getResponse(widgetId: WidgetId): string
+
+	/**
+	 * Checks if the widget has expired.
+	 * @param widgetId - The ID of the widget.
+	 */
+	isExpired(widgetId: WidgetId): boolean
 }
 
-export type TurnstileOptions = RenderOptions;
+export type TurnstileOptions = RenderOptions
 
 /**
  * Interface for Turnstile rendering parameters.
@@ -55,7 +74,7 @@ export interface RenderOptions {
 	 * widget configuration and is created upon the widget creation.
 	 * - Data Attribute - `data-sitekey`
 	 */
-	sitekey: string;
+	sitekey: string
 
 	/**
 	 * A customer value that can be used to differentiate widgets under the same
@@ -63,7 +82,7 @@ export interface RenderOptions {
 	 * contain up to 32 alphanumeric characters including `_` and `-`.
 	 * - Data Attribute - `data-action`
 	 */
-	action?: string;
+	action?: string
 
 	/**
 	 * A customer payload that can be used to attach customer data to the challenge
@@ -71,21 +90,21 @@ export interface RenderOptions {
 	 * contain up to 255 alphanumeric characters including `_` and `-`.
 	 * - Data Attribute - `data-cdata`
 	 */
-	cData?: string;
+	cData?: string
 
 	/**
 	 * Callback function invoked upon successful challenge completion.
 	 * - Data Attribute - `data-callback`
 	 * @param token - The token passed upon successful challenge.
 	 */
-	callback: (token: string) => void;
+	callback: (token: string) => void
 
 	/**
 	 * Callback invoked when there is an error (e.g., network error, challenge failed).
 	 * - Data Attribute - `data-error-callback`
 	 * @see [Client-side errors](https://developers.cloudflare.com/turnstile/reference/client-side-errors)
 	 */
-	'error-callback'?: () => void;
+	'error-callback'?: () => void
 
 	/**
 	 * Execution controls when to obtain the token of the widget and can be on `"render"` (default) or on `"execute"`.
@@ -93,85 +112,85 @@ export interface RenderOptions {
 	 * @defaultValue "render"
 	 * @see [Execution modes](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#execution-modes)
 	 */
-	execution?: 'render' | 'execute';
+	execution?: 'render' | 'execute'
 
 	/**
 	 * Callback invoked when the token expires and does not reset the widget.
 	 * - Data Attribute - `data-expired-callback`
 	 */
-	'expired-callback'?: () => void;
+	'expired-callback'?: () => void
 
 	/**
 	 * Callback invoked before the challenge enters interactive mode.
 	 * - Data Attribute - `data-before-interactive-callback`
 	 */
-	'before-interactive-callback'?: () => void;
+	'before-interactive-callback'?: () => void
 
 	/**
 	 * Callback invoked when the challenge has left interactive mode.
 	 * - Data Attribute - `data-after-interactive-callback`
 	 */
-	'after-interactive-callback'?: () => void;
+	'after-interactive-callback'?: () => void
 
 	/**
 	 * Callback invoked when a given client/browser is not supported.
 	 * - Data Attribute - `data-unsupported-callback`
 	 */
-	'unsupported-callback'?: () => void;
+	'unsupported-callback'?: () => void
 
 	/**
 	 * The widget theme. Can be `"light"`, `"dark"`, or `"auto"`.
 	 * - Data Attribute - `data-theme`
 	 */
-	theme?: 'light' | 'dark' | 'auto';
+	theme?: 'light' | 'dark' | 'auto'
 
 	/**
 	 * Language to display, either `"auto"` or an ISO 639-1 two-letter language code.
 	 * - Data Attribute - `data-language`
 	 * @see [language support FAQ](https://developers.cloudflare.com/turnstile/frequently-asked-questions/#what-languages-does-turnstile-support)
 	 */
-	language?: SupportedLanguages | 'auto' | ISO;
+	language?: SupportedLanguages | 'auto' | ISO
 
 	/**
 	 * The tabindex of Turnstile's iframe for accessibility purposes.
 	 * - Data Attribute - `data-tabindex`
 	 * @defaultValue 0
 	 */
-	tabindex?: number;
+	tabindex?: number
 
 	/**
 	 * Callback invoked when the challenge expires.
 	 * - Data Attribute - `data-timeout-callback`
 	 */
-	'timeout-callback'?: () => void;
+	'timeout-callback'?: () => void
 
 	/**
 	 * Controls if an input element with the response token is created.
 	 * - Data Attribute - `data-response-field`
 	 * @defaultValue true
 	 */
-	'response-field'?: boolean;
+	'response-field'?: boolean
 
 	/**
 	 * Name of the input element.
 	 * - Data Attribute - `data-response-field-name`
 	 * @defaultValue "cf-turnstile-response"
 	 */
-	'response-field-name'?: string;
+	'response-field-name'?: string
 
 	/**
 	 * The widget size. Can be 'normal' or 'compact'.
 	 * - Data Attribute - `data-size`
 	 * @defaultValue "normal"
 	 */
-	size?: 'normal' | 'compact';
+	size?: 'normal' | 'compact'
 
 	/**
 	 * Automatically retry upon failure to obtain a token or never retry.
 	 * - Data Attribute - `data-retry`
 	 * @defaultValue "auto"
 	 */
-	retry?: 'auto' | 'never';
+	retry?: 'auto' | 'never'
 
 	/**
 	 * Time between retry attempts in milliseconds. Value must be between `0` and `900000`
@@ -179,7 +198,7 @@ export interface RenderOptions {
 	 * - Data Attribute - `data-retry-interval`
 	 * @defaultValue 8000
 	 */
-	'retry-interval'?: number;
+	'retry-interval'?: number
 
 	/**
 	 * Controls the behavior when the token of a Turnstile widget has expired.
@@ -187,7 +206,7 @@ export interface RenderOptions {
 	 * - Data Attribute - `data-refresh-expired`
 	 * @defaultValue "auto"
 	 */
-	'refresh-expired'?: 'auto' | 'manual' | 'never';
+	'refresh-expired'?: 'auto' | 'manual' | 'never'
 
 	/**
 	 * Controls when the widget is visible:
@@ -200,12 +219,12 @@ export interface RenderOptions {
 	 * @see
 	 * [appearance-modes](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#appearance-modes)
 	 */
-	appearance?: 'always' | 'execute' | 'interaction-only';
+	appearance?: 'always' | 'execute' | 'interaction-only'
 
-	chlPageData?: string; // ENTERPRISE ONLY - undocumented
+	chlPageData?: string // ENTERPRISE ONLY - undocumented
 }
 
-export type ISO = string & {};
+export type ISO = string & {}
 
 /**
  * A list of supported languages for Turnstile.
@@ -235,4 +254,4 @@ export type SupportedLanguages =
 	| 'uk-ua'
 	| 'zh'
 	| 'zh-cn'
-	| 'zh-tw';
+	| 'zh-tw'
