@@ -14,7 +14,7 @@ export interface TurnstileObject {
 	 * If using synchronous loading, will be called once the DOM is ready.
 	 * @see [Explicit Rendering](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget)
 	 */
-	ready: () => void
+	ready: (cb: () => any) => void
 
 	/**
 	 * @see [Implicit Rendering](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#implicitly-render-the-turnstile-widget)
