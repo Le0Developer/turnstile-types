@@ -35,7 +35,10 @@ export interface TurnstileObject {
 	 * @param options - Configuration options for rendering. See {@link RenderParameters}.
 	 * @see [Execution Modes](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#execution-modes)
 	 */
-	execute: (container?: HTMLElement | ElementId, options?: TurnstileOptions) => void;
+	execute: (
+		container?: HTMLElement | ElementId,
+		options?: TurnstileOptions,
+	) => void;
 
 	/**
 	 * Explicitly renders the Turnstile widget.  The `sitekey` parameter is required. The
@@ -44,7 +47,10 @@ export interface TurnstileObject {
 	 * @param options - Configuration options for rendering. See {@link RenderParameters}.
 	 * @returns A `widgetId` string if successful, otherwise undefined.
 	 */
-	render(container: HTMLElement | ElementId, options: RenderParameters): string | undefined;
+	render(
+		container: HTMLElement | ElementId,
+		options: RenderParameters,
+	): string | undefined;
 
 	/**
 	 * Resets the widget.
