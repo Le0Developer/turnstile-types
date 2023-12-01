@@ -17,10 +17,10 @@ export type ElementId = string;
  */
 export interface TurnstileObject {
 	/**
-	 * If using synchronous loading, will be called once the DOM is ready.
+	 * If using synchronous loading, the callback will be called once the DOM is ready.
 	 * @see [Explicit Rendering](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget)
 	 */
-	ready: (cb: () => any) => void;
+	ready: (callback: () => any) => void;
 
 	/**
 	 * @see [Implicit Rendering](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#implicitly-render-the-turnstile-widget)
@@ -28,29 +28,30 @@ export interface TurnstileObject {
 	implicitRender: () => void;
 
 	/**
-	 * Excecutes the challenge after the render() function has been called, by invoking the
-	 * turnstile.execute(container: string | HTMLElement, jsParams?: RenderParameters) function
-	 * separately, decoupling the appearance and rendering of a widget from its execution.
-	 * @param container - HTML container to render the widget, or an element id selector.
-	 * @param options - Configuration options for rendering. See {@link RenderParameters}.
+	 * Executes the challenge after the render() function has been called with { ... execution: "execute" },
+	 * decoupling the appearance and rendering of a widget from its execution.
+	 * @param container - The ID of the widget, the HTML container, or an element id selector.
+	 * @param parameters - Configuration options for rendering. See {@link RenderParameters}.
 	 * @see [Execution Modes](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#execution-modes)
 	 */
 	execute: (
-		container?: HTMLElement | ElementId,
-		options?: TurnstileOptions,
+		container?: WidgetId | HTMLElement | ElementId,
+		parameters?: RenderParameters,
 	) => void;
 
 	/**
-	 * Explicitly renders the Turnstile widget.  The `sitekey` parameter is required. The
-	 * `callback` parameter, however, is only used if `execution` is set to `execute`.
+	 * Explicitly renders the Turnstile widget.
+	 * Passed parameters will be combined with `data-` attributes on the container.
+	 * Only the `sitekey` parameter is required.
 	 * @param container - HTML container to render the widget, or an element id selector.
-	 * @param options - Configuration options for rendering. See {@link RenderParameters}.
-	 * @returns A `widgetId` string if successful, otherwise undefined.
+	 * @param parameters - Configuration options for rendering. See {@link RenderParameters}.
+	 * @throws {Error} Will throw an error if any parameter is invalid.
+	 * @returns A `widgetId` string.
 	 */
 	render(
 		container: HTMLElement | ElementId,
-		options: RenderParameters,
-	): string | undefined;
+		parameters?: RenderParameters,
+	): string;
 
 	/**
 	 * Resets the widget.
@@ -65,7 +66,7 @@ export interface TurnstileObject {
 	remove(widget?: WidgetId | HTMLElement | ElementId): void;
 
 	/**
-	 * Obtains the widget's response using its widgetId.
+	 * Obtains the widget's response.
 	 * @param widget - The ID of the widget, the HTML container, or an element id selector.
 	 */
 	getResponse(widget?: WidgetId | HTMLElement | ElementId): string;
@@ -77,15 +78,20 @@ export interface TurnstileObject {
 	isExpired(widget?: WidgetId | HTMLElement | ElementId): boolean;
 }
 
+/**
+ * @deprecated since version 1.2.0, replaced with RenderParameters
+ */
 export type TurnstileOptions = RenderParameters;
 
 /**
  * Interface for Turnstile rendering parameters.
+ * @see https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations
  */
 export interface RenderParameters {
 	/**
 	 * Every widget has a sitekey. This sitekey is associated with the corresponding
 	 * widget configuration and is created upon widget creation in Cloudflare's dashboard.
+	 * This is the only required parameter.
 	 * - Data Attribute - `data-sitekey`
 	 */
 	sitekey: string;
@@ -116,12 +122,10 @@ export interface RenderParameters {
 	/**
 	 * Callback invoked when there is an error (e.g., network error, challenge failed).
 	 * - Data Attribute - `data-error-callback`
+	 * @param errorCode - The error code specified by Turnstile.
 	 * @see [Client-side errors](https://developers.cloudflare.com/turnstile/reference/client-side-errors)
 	 */
-	"error-callback"?: (
-		/** @see [Client-side errors](https://developers.cloudflare.com/turnstile/reference/client-side-errors) */
-		errorCode: string,
-	) => void;
+	"error-callback"?: (errorCode: string) => void;
 
 	/**
 	 * Execution controls when to obtain the token of the widget and can be on
@@ -165,15 +169,16 @@ export interface RenderParameters {
 	/**
 	 * The widget theme. Can be `"light"`, `"dark"`, or `"auto"`.
 	 * - Data Attribute - `data-theme`
+	 * @defaultValue "auto"
 	 */
 	theme?: "light" | "dark" | "auto";
 
 	/**
 	 * Language to display, either `"auto"` or an ISO 639-1 two-letter language code.
 	 * - Data Attribute - `data-language`
-	 * @see [language support FAQ](https://developers.cloudflare.com/turnstile/frequently-asked-questions/#what-languages-does-turnstile-support)
+	 * @see [Supported languages](https://developers.cloudflare.com/turnstile/reference/supported-languages/)
 	 */
-	language?: SupportedLanguages | "auto" | Iso3166Alpha2Code;
+	language?: SupportedLanguages | "auto" | string;
 
 	/**
 	 * The tabindex of Turnstile's iframe for accessibility purposes.
@@ -199,6 +204,7 @@ export interface RenderParameters {
 	/**
 	 * The widget size. Can be 'normal' or 'compact'.
 	 * - Data Attribute - `data-size`
+	 * @see https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#widget-size
 	 * @defaultValue "normal"
 	 */
 	size?: "normal" | "compact";
@@ -219,22 +225,25 @@ export interface RenderParameters {
 	"retry-interval"?: number;
 
 	/**
-	 * Controls the behavior when the token of a Turnstile widget has expired.
-	 * Can be 'auto', 'manual', or 'never'.
+	 * Controls the behavior when the token of a Turnstile widget has expired:
+	 *  - `"auto"` - The widget will automatically reload and restart.
+	 *  - `"manual"` - The user will be prompted before automatically reloading and restarting.
+	 *  - `"never"` - The user will not see any difference nor will the widget reload or restart.
+	 *
 	 * - Data Attribute - `data-refresh-expired`
 	 * @defaultValue "auto"
 	 */
 	"refresh-expired"?: "auto" | "manual" | "never";
 
 	/**
-	 * Controls when the widget is visible:
+	 * If a widget is visible, its appearance can be controlled via the `appearance` parameter:
 	 * - `"always"` - The widget is visible at all times.
 	 * - `"execute"` - The widget is visible only after the challenge begins.
 	 * - `"interaction-only"` - The widget is visible only when an interaction is required.
 	 *
-	 * If a widget is visible, its appearance can be controlled via the `appearance` parameter.
 	 * - Data Attribute - `data-appearance`
-	 * @see [appearance-modes](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#appearance-modes)
+	 * @see [Appearance modes](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#appearance-modes)
+	 * @defaultValue "always"
 	 */
 	appearance?: "always" | "execute" | "interaction-only";
 
@@ -243,8 +252,7 @@ export interface RenderParameters {
 
 /**
  * A list of supported languages for Turnstile.
- * @see
- * [language support FAQ](https://developers.cloudflare.com/turnstile/reference/supported-languages/)
+ * @see https://developers.cloudflare.com/turnstile/reference/supported-languages/
  */
 export type SupportedLanguages =
 	| "ar-eg"
@@ -270,257 +278,3 @@ export type SupportedLanguages =
 	| "zh"
 	| "zh-cn"
 	| "zh-tw";
-
-/**
- * ISO 3166-1 Alpha-2 codes
- */
-export type Iso3166Alpha2Code =
-	| "AD"
-	| "AE"
-	| "AF"
-	| "AG"
-	| "AI"
-	| "AL"
-	| "AM"
-	| "AO"
-	| "AQ"
-	| "AR"
-	| "AS"
-	| "AT"
-	| "AU"
-	| "AW"
-	| "AX"
-	| "AZ"
-	| "BA"
-	| "BB"
-	| "BD"
-	| "BE"
-	| "BF"
-	| "BG"
-	| "BH"
-	| "BI"
-	| "BJ"
-	| "BL"
-	| "BM"
-	| "BN"
-	| "BO"
-	| "BQ"
-	| "BR"
-	| "BS"
-	| "BT"
-	| "BV"
-	| "BW"
-	| "BY"
-	| "BZ"
-	| "CA"
-	| "CC"
-	| "CD"
-	| "CF"
-	| "CG"
-	| "CH"
-	| "CI"
-	| "CK"
-	| "CL"
-	| "CM"
-	| "CN"
-	| "CO"
-	| "CR"
-	| "CU"
-	| "CV"
-	| "CW"
-	| "CX"
-	| "CY"
-	| "CZ"
-	| "DE"
-	| "DJ"
-	| "DK"
-	| "DM"
-	| "DO"
-	| "DZ"
-	| "EC"
-	| "EE"
-	| "EG"
-	| "EH"
-	| "ER"
-	| "ES"
-	| "ET"
-	| "FI"
-	| "FJ"
-	| "FK"
-	| "FM"
-	| "FO"
-	| "FR"
-	| "GA"
-	| "GB"
-	| "GD"
-	| "GE"
-	| "GF"
-	| "GG"
-	| "GH"
-	| "GI"
-	| "GL"
-	| "GM"
-	| "GN"
-	| "GP"
-	| "GQ"
-	| "GR"
-	| "GS"
-	| "GT"
-	| "GU"
-	| "GW"
-	| "GY"
-	| "HK"
-	| "HM"
-	| "HN"
-	| "HR"
-	| "HT"
-	| "HU"
-	| "ID"
-	| "IE"
-	| "IL"
-	| "IM"
-	| "IN"
-	| "IO"
-	| "IQ"
-	| "IR"
-	| "IS"
-	| "IT"
-	| "JE"
-	| "JM"
-	| "JO"
-	| "JP"
-	| "KE"
-	| "KG"
-	| "KH"
-	| "KI"
-	| "KM"
-	| "KN"
-	| "KP"
-	| "KR"
-	| "KW"
-	| "KY"
-	| "KZ"
-	| "LA"
-	| "LB"
-	| "LC"
-	| "LI"
-	| "LK"
-	| "LR"
-	| "LS"
-	| "LT"
-	| "LU"
-	| "LV"
-	| "LY"
-	| "MA"
-	| "MC"
-	| "MD"
-	| "ME"
-	| "MF"
-	| "MG"
-	| "MH"
-	| "MK"
-	| "ML"
-	| "MM"
-	| "MN"
-	| "MO"
-	| "MP"
-	| "MQ"
-	| "MR"
-	| "MS"
-	| "MT"
-	| "MU"
-	| "MV"
-	| "MW"
-	| "MX"
-	| "MY"
-	| "MZ"
-	| "NA"
-	| "NC"
-	| "NE"
-	| "NF"
-	| "NG"
-	| "NI"
-	| "NL"
-	| "NO"
-	| "NP"
-	| "NR"
-	| "NU"
-	| "NZ"
-	| "OM"
-	| "PA"
-	| "PE"
-	| "PF"
-	| "PG"
-	| "PH"
-	| "PK"
-	| "PL"
-	| "PM"
-	| "PN"
-	| "PR"
-	| "PS"
-	| "PT"
-	| "PW"
-	| "PY"
-	| "QA"
-	| "RE"
-	| "RO"
-	| "RS"
-	| "RU"
-	| "RW"
-	| "SA"
-	| "SB"
-	| "SC"
-	| "SD"
-	| "SE"
-	| "SG"
-	| "SH"
-	| "SI"
-	| "SJ"
-	| "SK"
-	| "SL"
-	| "SM"
-	| "SN"
-	| "SO"
-	| "SR"
-	| "SS"
-	| "ST"
-	| "SV"
-	| "SX"
-	| "SY"
-	| "SZ"
-	| "TC"
-	| "TD"
-	| "TF"
-	| "TG"
-	| "TH"
-	| "TJ"
-	| "TK"
-	| "TL"
-	| "TM"
-	| "TN"
-	| "TO"
-	| "TR"
-	| "TT"
-	| "TV"
-	| "TW"
-	| "TZ"
-	| "UA"
-	| "UG"
-	| "UM"
-	| "US"
-	| "UY"
-	| "UZ"
-	| "VA"
-	| "VC"
-	| "VE"
-	| "VG"
-	| "VI"
-	| "VN"
-	| "VU"
-	| "WF"
-	| "WS"
-	| "YE"
-	| "YT"
-	| "ZA"
-	| "ZM"
-	| "ZW";

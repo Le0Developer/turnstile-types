@@ -8,6 +8,10 @@ and this project adheres to
 
 ## [unreleased]
 
+### Added
+
+- JSDoc comments with more comprehensive information (thanks @FractalHQ)
+
 ## [1.1.3] - 2023-09-18
 
 ### Added
