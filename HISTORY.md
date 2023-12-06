@@ -12,6 +12,10 @@ and this project adheres to
 
 - JSDoc comments with more comprehensive information (thanks @FractalHQ)
 
+### Fixed
+
+- Added missing callback argument to `turnstile.ready`
+
 ## [1.1.3] - 2023-09-18
 
 ### Added
