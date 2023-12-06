@@ -15,9 +15,7 @@ Add `turnstile-types` to the types array in your `tsconfig.json`:
 ```json
 {
 	"compilerOptions": {
-		"target": "ES2020",
-		"module": "CommonJS",
-		"lib": ["ES2020"],
+		// ...
 		"types": ["turnstile-types"]
 	}
 }

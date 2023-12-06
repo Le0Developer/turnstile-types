@@ -11,5 +11,11 @@
 		"index.d.ts"
 	],
 	"author": "Leo Developer",
+	"contributors": [
+		{
+			"name": "Braden Wiggins",
+			"email": "braden@fractal-hq.com"
+		}
+	],
 	"license": "MIT"
 }
