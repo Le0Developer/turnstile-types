@@ -278,3 +278,9 @@ export type SupportedLanguages =
 	| "zh"
 	| "zh-cn"
 	| "zh-tw";
+
+declare global {
+	interface Window {
+		turnstile: TurnstileObject;
+	}
+}

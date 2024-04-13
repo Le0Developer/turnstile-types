@@ -8,6 +8,11 @@ and this project adheres to
 
 ## [unreleased]
 
+### Fixed
+
+- Re-added `TurnstileObject` to the global scope which was accidentally removed
+  in 1.2.0
+
 ## [1.2.0] - 2023-12-06
 
 ### Added
