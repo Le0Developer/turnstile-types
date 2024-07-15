@@ -8,6 +8,10 @@ and this project adheres to
 
 ## [unreleased]
 
+### Added
+
+- Added `preClearanceObtained` argument to `callback`
+
 ## [1.2.1] - 2024-04-13
 
 ### Fixed

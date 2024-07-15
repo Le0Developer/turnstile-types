@@ -116,8 +116,9 @@ export interface RenderParameters {
 	 * Callback function invoked upon successful challenge completion.
 	 * - Data Attribute - `data-callback`
 	 * @param token - The token passed upon successful challenge.
+	 * @param preClearanceObtained - A boolean indicating if the clearance was obtained.
 	 */
-	callback?: (token: string) => void;
+	callback?: (token: string, preClearanceObtained: boolean) => void;
 
 	/**
 	 * Callback invoked when there is an error (e.g., network error, challenge failed).
