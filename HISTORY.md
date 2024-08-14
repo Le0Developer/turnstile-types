@@ -12,6 +12,7 @@ and this project adheres to
 
 - Added `preClearanceObtained` argument to `callback`
 - Missing languages to SupportedLanguages
+- New `flexible` size option
 
 ## [1.2.1] - 2024-04-13
 

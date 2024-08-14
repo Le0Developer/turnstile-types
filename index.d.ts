@@ -208,7 +208,7 @@ export interface RenderParameters {
 	 * @see https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#widget-size
 	 * @defaultValue "normal"
 	 */
-	size?: "normal" | "compact";
+	size?: "normal" | "flexible" | "compact";
 
 	/**
 	 * Automatically retry upon failure to obtain a token or never retry.
