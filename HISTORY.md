@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [unreleased]
 
+## [1.2.2] - 2024-08-14
+
 ### Added
 
 - Added `preClearanceObtained` argument to `callback`
@@ -85,7 +87,8 @@ and this project adheres to
 Initial release.
 
 [unreleased]:
-	https://github.com/Le0Developer/turnstile-types/compare/v1.2.1..1HEAD
+	https://github.com/Le0Developer/turnstile-types/compare/v1.2.2..1HEAD
+[1.2.2]: https://github.com/Le0Developer/turnstile-types/releases/tag/v1.2.2
 [1.2.1]: https://github.com/Le0Developer/turnstile-types/releases/tag/v1.2.1
 [1.2.0]: https://github.com/Le0Developer/turnstile-types/releases/tag/v1.2.0
 [1.1.3]: https://github.com/Le0Developer/turnstile-types/releases/tag/v1.1.3
