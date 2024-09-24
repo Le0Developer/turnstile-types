@@ -8,6 +8,11 @@ and this project adheres to
 
 ## [unreleased]
 
+### Added
+
+- Added `token` to `expired-callback`
+- Added `invisible` to `size` (reCAPTCHA compatibility)
+
 ## [1.2.2] - 2024-08-14
 
 ### Added

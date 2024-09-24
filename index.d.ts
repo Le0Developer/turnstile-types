@@ -141,7 +141,7 @@ export interface RenderParameters {
 	 * Callback invoked when the token expires and does not reset the widget.
 	 * - Data Attribute - `data-expired-callback`
 	 */
-	"expired-callback"?: () => void;
+	"expired-callback"?: (token: string) => void;
 
 	/**
 	 * Callback invoked before the challenge enters interactive mode.
@@ -208,7 +208,7 @@ export interface RenderParameters {
 	 * @see https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#widget-size
 	 * @defaultValue "normal"
 	 */
-	size?: "normal" | "flexible" | "compact";
+	size?: "normal" | "flexible" | "compact" | "invisible";
 
 	/**
 	 * Automatically retry upon failure to obtain a token or never retry.
