@@ -8,6 +8,10 @@ and this project adheres to
 
 ## [unreleased]
 
+### Added
+
+- `refresh-timeout`
+
 ### Fixed
 
 - Outdated links (documentation has shuffled around in the past few years)

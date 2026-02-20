@@ -242,9 +242,22 @@ export interface RenderParameters {
    *  - `"never"` - The user will not see any difference nor will the widget reload or restart.
    *
    * - Data Attribute - `data-refresh-expired`
+   * @see [Refresh Behavior](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/widget-configurations/#refresh-behavior)
    * @defaultValue "auto"
    */
   "refresh-expired"?: "auto" | "manual" | "never";
+
+  /**
+   * Controls the behavior when interactive challenges of Turnstile time out:
+   *  - `"auto"` - The widget will automatically reload and restart.
+   *  - `"manual"` - The user will be prompted before automatically reloading and restarting.
+   *  - `"never"` - The user will not see any difference nor will the widget reload or restart.
+   *
+   * - Data Attribute - `data-refresh-timeout`
+   * @see [Refresh Behavior](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/widget-configurations/#refresh-behavior)
+   * @defaultValue "auto"
+   */
+  "refresh-timeout"?: "auto" | "manual" | "never";
 
   /**
    * If a widget is visible, its appearance can be controlled via the `appearance` parameter:
