@@ -8,6 +8,10 @@ and this project adheres to
 
 ## [unreleased]
 
+### Fixed
+
+- Outdated links (documentation has shuffled around in the past few years)
+
 ## [1.2.3] - 2024-09-24
 
 ### Added
@@ -93,8 +97,7 @@ and this project adheres to
 
 Initial release.
 
-[unreleased]:
-	https://github.com/Le0Developer/turnstile-types/compare/v1.2.2..HEAD
+[unreleased]: https://github.com/Le0Developer/turnstile-types/compare/v1.2.2..HEAD
 [1.2.3]: https://github.com/Le0Developer/turnstile-types/releases/tag/v1.2.3
 [1.2.2]: https://github.com/Le0Developer/turnstile-types/releases/tag/v1.2.2
 [1.2.1]: https://github.com/Le0Developer/turnstile-types/releases/tag/v1.2.1

@@ -32,7 +32,7 @@ export interface TurnstileObject {
    * decoupling the appearance and rendering of a widget from its execution.
    * @param container - The ID of the widget, the HTML container, or an element id selector.
    * @param parameters - Configuration options for rendering. See {@link RenderParameters}.
-   * @see [Execution Modes](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#execution-modes)
+   * @see [Execution Modes](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#execution-mode)
    */
   execute: (
     container?: WidgetId | HTMLElement | ElementId,
@@ -85,7 +85,7 @@ export type TurnstileOptions = RenderParameters;
 
 /**
  * Interface for Turnstile rendering parameters.
- * @see https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations
+ * @see [Widget Configurations](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/widget-configurations/)
  */
 export interface RenderParameters {
   /**
@@ -97,18 +97,19 @@ export interface RenderParameters {
   sitekey: string;
 
   /**
-   * A customer value that can be used to differentiate widgets under the same
+   * A value that can be used to differentiate widgets under the same
    * sitekey in analytics and which is returned upon validation. This can only
    * contain up to 32 alphanumeric characters including `_` and `-`.
+   * For example: "login", "register", "checkout", ...
    * - Data Attribute - `data-action`
    */
   action?: string;
 
   /**
-   * A customer payload that can be used to attach customer data to the challenge
-   * throughout its issuance and which is returned upon validation. This can only
-   * contain up to 255 alphanumeric characters including `_` and `-`.
+   * Custom data which can be attached to the challenge and which will be returned upon validation.
+   * This can contain up to 255 alphanumeric characters including `_` and `-`.
    * - Data Attribute - `data-cdata`
+   * @see [Custom Data](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/widget-configurations/#custom-data)
    */
   cData?: string;
 
@@ -117,6 +118,7 @@ export interface RenderParameters {
    * - Data Attribute - `data-callback`
    * @param token - The token passed upon successful challenge.
    * @param preClearanceObtained - A boolean indicating if the clearance was obtained.
+   * @see [Callback configuration](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/widget-configurations/#callback-configuration)
    */
   callback?: (token: string, preClearanceObtained: boolean) => void;
 
@@ -124,7 +126,8 @@ export interface RenderParameters {
    * Callback invoked when there is an error (e.g., network error, challenge failed).
    * - Data Attribute - `data-error-callback`
    * @param errorCode - The error code specified by Turnstile.
-   * @see [Client-side errors](https://developers.cloudflare.com/turnstile/reference/client-side-errors)
+   * @see [Callback configuration](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/widget-configurations/#callback-configuration)
+   * @see [Client-side errors](https://developers.cloudflare.com/turnstile/troubleshooting/client-side-errors/)
    */
   "error-callback"?: (errorCode: string) => void;
 
@@ -133,37 +136,42 @@ export interface RenderParameters {
    * `"render"` (default) or on `"execute"`.
    * - Data Attribute - `data-execution`
    * @defaultValue "render"
-   * @see [Execution modes](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#execution-modes)
+   * @see [Execution modes](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#execution-mode)
    */
   execution?: "render" | "execute";
 
   /**
    * Callback invoked when the token expires and does not reset the widget.
    * - Data Attribute - `data-expired-callback`
+   * @see [Callback configuration](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/widget-configurations/#callback-configuration)
    */
   "expired-callback"?: (token: string) => void;
 
   /**
    * Callback invoked before the challenge enters interactive mode.
    * - Data Attribute - `data-before-interactive-callback`
+   * @see [Callback configuration](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/widget-configurations/#callback-configuration)
    */
   "before-interactive-callback"?: () => void;
 
   /**
    * Callback invoked when the challenge has left interactive mode.
    * - Data Attribute - `data-after-interactive-callback`
+   * @see [Callback configuration](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/widget-configurations/#callback-configuration)
    */
   "after-interactive-callback"?: () => void;
 
   /**
    * Callback invoked when a given client/browser is not supported.
    * - Data Attribute - `data-unsupported-callback`
+   * @see [Callback configuration](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/widget-configurations/#callback-configuration)
    */
   "unsupported-callback"?: () => void;
 
   /**
    * Callback invoked when the challenge expires.
    * - Data Attribute - `data-timeout-callback`
+   * @see [Callback configuration](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/widget-configurations/#callback-configuration)
    */
   "timeout-callback"?: () => void;
 
@@ -196,16 +204,16 @@ export interface RenderParameters {
   "response-field"?: boolean;
 
   /**
-   * Name of the input element.
+   * Name of the input element (name which is submitted to the server in a form).
    * - Data Attribute - `data-response-field-name`
    * @defaultValue "cf-turnstile-response"
    */
   "response-field-name"?: string;
 
   /**
-   * The widget size. Can be 'normal' or 'compact'.
+   * The widget size. Can be 'normal', 'compact' or 'flexible'.
    * - Data Attribute - `data-size`
-   * @see https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#widget-size
+   * @see [Widget Size](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#widget-size)
    * @defaultValue "normal"
    */
   size?: "normal" | "flexible" | "compact" | "invisible";
@@ -213,6 +221,7 @@ export interface RenderParameters {
   /**
    * Automatically retry upon failure to obtain a token or never retry.
    * - Data Attribute - `data-retry`
+   * @see [Retry Behavior](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/widget-configurations/#retry-behavior)
    * @defaultValue "auto"
    */
   retry?: "auto" | "never";
@@ -221,6 +230,7 @@ export interface RenderParameters {
    * Time between retry attempts in milliseconds. Value must be between `0` and `900000`
    * (15 minutes). Only applies when `retry` is set to `auto`.
    * - Data Attribute - `data-retry-interval`
+   * @see [Retry Behavior](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/widget-configurations/#retry-behavior)
    * @defaultValue 8000
    */
   "retry-interval"?: number;
@@ -243,7 +253,7 @@ export interface RenderParameters {
    * - `"interaction-only"` - The widget is visible only when an interaction is required.
    *
    * - Data Attribute - `data-appearance`
-   * @see [Appearance modes](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#appearance-modes)
+   * @see [Appearance modes](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/widget-configurations/#appearance-modes)
    * @defaultValue "always"
    */
   appearance?: "always" | "execute" | "interaction-only";
